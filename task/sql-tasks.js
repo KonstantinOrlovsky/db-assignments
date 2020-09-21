@@ -262,7 +262,7 @@ async function task_1_12(db) {
               FROM Products as a
               ORDER BY UnitPrice DESC, ProductName 
               LIMIT 20 ) as b
-        ORDER BY UnitPrice 
+        ORDER BY UnitPrice, ProductName
     `);
     return result[0];
 }
