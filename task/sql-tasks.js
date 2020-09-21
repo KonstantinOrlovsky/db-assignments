@@ -88,7 +88,7 @@ async function task_1_4(db) {
         SELECT
            CustomerID as 'Customer Id',
            COUNT(CustomerID) as 'Total number of Orders',
-           ROUND(COUNT(CustomerID) / (SELECT count(CustomerID) FROM orders) * 100, 5) as '% of all orders'
+           ROUND(COUNT(CustomerID) / (SELECT count(CustomerID) FROM Orders) * 100, 5) as '% of all orders'
         FROM Orders
         GROUP BY CustomerID
         ORDER BY COUNT(CustomerID) DESC, CustomerID
@@ -437,7 +437,7 @@ async function task_1_20(db) {
            SUM(UnitPrice * Quantity) as 'Amount, $'
         FROM Employees as E
         JOIN Orders as O ON E.EmployeeID = O.EmployeeID
-        JOIN Orderdetails as OD ON O.OrderID = OD.OrderID
+        JOIN OrderDetails as OD ON O.OrderID = OD.OrderID
         GROUP BY EmployeeID
         ORDER BY \`Amount, $\` DESC LIMIT 1
     `);
