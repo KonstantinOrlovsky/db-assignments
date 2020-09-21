@@ -48,7 +48,7 @@ async function task_1_2(db) {
            OrderId as 'Order Id',
            SUM(UnitPrice * Quantity) as 'Order Total Price',
            ROUND(SUM(Discount * Quantity) / SUM(UnitPrice * Quantity) * 100, 3) as 'Total Order Discount, %'
-        FROM orderdetails
+        FROM OrderDetails
         GROUP BY OrderID
         ORDER BY OrderID DESC
     `);
@@ -67,7 +67,7 @@ async function task_1_3(db) {
         SELECT 
            CustomerID as CustomerId, 
            CompanyName 
-        FROM customers
+        FROM Customers
         WHERE Country = 'USA' AND Fax IS NULL
         ORDER BY CustomerID 
     `);
@@ -89,7 +89,7 @@ async function task_1_4(db) {
            CustomerID as 'Customer Id',
            COUNT(CustomerID) as 'Total number of Orders',
            ROUND(COUNT(CustomerID) / (SELECT count(CustomerID) FROM orders) * 100, 5) as '% of all orders'
-        FROM orders
+        FROM Orders
         GROUP BY CustomerID
         ORDER BY COUNT(CustomerID) DESC, CustomerID
     `);
@@ -413,7 +413,7 @@ async function task_1_19(db) {
            SUM(OD.UnitPrice * OD.Quantity) as 'TotalOrdersAmount, $'
         FROM Customers as C
         JOIN Orders as O ON C.CustomerID = O.CustomerID
-        JOIN Orderdetails as OD ON O.OrderID = OD.OrderID
+        JOIN OrderDetails as OD ON O.OrderID = OD.OrderID
         GROUP BY C.CustomerID
         HAVING \`TotalOrdersAmount, $\` > 10000
         ORDER BY \`TotalOrdersAmount, $\` DESC
@@ -455,7 +455,7 @@ async function task_1_21(db) {
         SELECT
         OrderID as 'OrderID',
            SUM(UnitPrice * Quantity) as 'Maximum Purchase Amount, $'
-        FROM Orderdetails
+        FROM OrderDetails
         GROUP BY OrderID
         ORDER BY \`Maximum Purchase Amount, $\` DESC LIMIT 1 
     `);
